@@ -51,7 +51,7 @@ export class TicketService {
   }
 
   public onFinishedTicket(id: string) {
-    const ticket = this._tickets.find((ticket) => ticket.id === id);
+    const ticket = this.tickets.find((ticket) => ticket.id === id);
     if (!ticket) return { status: 'error', message: 'Ticket not found' };
 
     ticket.done = true;
