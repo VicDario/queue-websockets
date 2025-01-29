@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { TicketController } from './controller';
 
-export class TickerRoutes {
+export class TicketRoutes {
   constructor() {}
 
   public static get routes() {
