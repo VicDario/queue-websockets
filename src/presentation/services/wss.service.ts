@@ -32,4 +32,12 @@ export class WssService {
       ws.on('close', () => console.log('Client disconnected'));
     });
   }
+
+  public sendMessage(type: string, payload: Object) {
+    this.wss.clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(JSON.stringify({ type, payload }));
+      }
+    });
+  }
 }
