@@ -44,6 +44,19 @@ async function getTicket() {
   lblCurrentTicker.innerText = ticket.number;
 }
 
+async function finishTicket() {
+  const response = await fetch(`/api/tickets/done/${workingTicket.id}`, {
+    method: 'PUT',
+  });
+  const { status, message } = await response.json();
+  if (status === 'error') {
+    lblCurrentTicker.innerText = message;
+    return;
+  }
+  workingTicket = null;
+  lblCurrentTicker.innerText = 'No ticket';
+}
+
 function connectToWebSockets() {
   const socket = new WebSocket('ws://localhost:3000/ws');
 
@@ -67,7 +80,7 @@ function connectToWebSockets() {
 }
 
 btnDraw.addEventListener('click', getTicket);
-btnDone.addEventListener('click', () => {});
+btnDone.addEventListener('click', finishTicket);
 
 connectToWebSockets();
 loadInitialCount();
