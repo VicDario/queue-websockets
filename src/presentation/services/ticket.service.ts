@@ -60,6 +60,8 @@ export class TicketService {
 
     ticket.done = true;
     ticket.doneAt = new Date();
+
+    return { status: 'success' };
   }
 
   private onTicketNumberChanged() {
