@@ -5,7 +5,7 @@ import { WssService } from './wss.service';
 export class TicketService {
   constructor(private readonly wssService: WssService = WssService.instance) {}
 
-  public readonly tickets: Ticket[] = [
+  public tickets: Ticket[] = [
     { id: UuidAdapter.v4(), number: 1, createdAt: new Date(), done: false },
     { id: UuidAdapter.v4(), number: 2, createdAt: new Date(), done: false },
     { id: UuidAdapter.v4(), number: 3, createdAt: new Date(), done: false },
@@ -50,6 +50,7 @@ export class TicketService {
 
     this._workingOnTickets.unshift({ ...ticket });
     this.onTicketNumberChanged();
+    this.onWorkingOnChanged();
 
     return { status: 'success', ticket };
   }
@@ -66,5 +67,9 @@ export class TicketService {
 
   private onTicketNumberChanged() {
     this.wssService.sendMessage('on-ticket-number-changed', this.pendingTickets.length);
+  }
+
+  private onWorkingOnChanged() {
+    this.wssService.sendMessage('on-working-on-changed', [...this.lastWorkingOnTickets]);
   }
 }
